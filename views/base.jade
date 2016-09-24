@@ -1,0 +1,39 @@
+doctype html
+html
+    head
+        title
+            block title
+                | eth log - monitor logs from any ethereum contract
+
+        meta(name="apple-mobile-web-app-capable", content="yes")
+        meta(name="mobile-web-app-capable", content="yes")
+        meta(name="HandheldFriendly", content="True")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no")
+        link(rel='stylesheet', href='//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.min.css')
+        meta(name="apple-mobile-web-app-status-bar-style", content="black-translucent")
+
+        link(href='http://fonts.googleapis.com/css?family=Roboto:400,700', rel='stylesheet', type='text/css')
+        link(rel='stylesheet', href='/css/base.css')
+
+    body
+        #header
+            .narrow
+                h1
+                    code eth log
+
+                p.catchphrase effortless logging from any ethereum contract
+
+                .links
+                    a(href='/') What is this?
+                    a(href='/recipes') Recipes
+                    a(href='/login') Log in
+            
+        block content
+
+        #footer
+            .links
+                a(href="http://ethservices.io") powered by ethereum services
+                a(href="http://prontotype.us") A Prontotype Project
+
+    script(src='/js/ga.js')
+    block scripts

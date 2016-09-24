@@ -1,0 +1,20 @@
+extends base
+
+block content
+    .content
+        .page.log-page
+            .narrow
+                h3: a(href='/') Logs from contract: 
+                    code    #{contract_address}
+
+                #insert
+                    #logs
+
+                #block_counter
+
+        if contract_address
+            script.
+                window.contract_address = "#{contract_address}"
+
+        script(src='/socket.io/socket.io.js')
+        script(src='/js/log-insert.js')

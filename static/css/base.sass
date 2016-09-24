@@ -1,0 +1,136 @@
+$fonts
+    small: 12px
+    default: 14px
+    medium: 16px
+    big: 20px
+
+$padding
+    tiny: 4px
+    small: 10px
+    default: 25px
+    medium: 40px
+    big: 55px
+    huge: 70px
+
+$colors
+    dark_gray: #555
+    medium_gray: #858585
+    light_gray: #ccc
+    lighter_gray: #e2e2e2
+    lightest_gray: #f8f8f8
+    tags: #f1f1f1
+    log_green: #25c700
+    green: #00c090
+    error_red: #ea7474
+    error: red
+    warning: yellow
+*
+    margin: 0
+    padding: 0
+    box-sizing: border-box
+
+body
+    font: 14px/16px Roboto
+    color: white
+    font-family: monospace
+    font-weight: 200
+    background: #333
+a
+    color: $colors.log_green
+
+.content
+    padding: $padding.default
+
+.narrow
+    max-width: 800px
+    margin: 0 auto
+
+.catchphrase
+    margin-top: -4px
+    margin-bottom: $padding.small
+    color: $colors.light_gray
+    font-weight: bold
+
+h3
+    font-weight: 500
+    font-size: $fonts.medium
+    margin-bottom: $padding.default
+
+.loading
+    padding: $padding.default
+
+.right
+    float: right
+
+#app
+    padding: $padding.default
+    padding-top: 0px
+
+#header
+    padding: $padding.default
+    h1
+        color: $colors.log_green
+        margin-bottom: $padding.small
+    a
+        padding-right: $padding.default
+
+.logs
+    height: 500px
+    overflow-y: scroll
+    padding: $padding.default
+    margin-bottom: $padding.big
+    background: #151515
+
+    .log
+        margin-bottom: $padding.small
+
+        .tag
+            display: inline-block
+            font-weight: bold
+            color: $colors.log_green
+            margin-right: $padding.small
+
+            &.error
+                color: $colors.error
+            &.warning
+                color: $colors.warning
+
+        .message, .address
+            display: inline-block
+
+        .metadata
+            display: block
+            color: $colors.medium_gray
+            padding-top: $padding.tiny
+
+        .timestamp
+            color: $colors.medium_gray
+            display: inline-block
+            margin-right: $padding.small
+            a
+                text-decoration: none
+
+#footer
+    position: fixed
+    bottom: 0px
+    left: 0px
+    right: 0px
+    padding: $padding.default
+
+    .links
+        width: 100%
+        padding: $padding.default
+        text-align: right
+        a
+            display: block
+            margin-left: $padding.default
+
+.blurbs
+    font-size: 14px
+    max-width: 600px
+
+    p
+        margin-bottom: $padding.tiny
+
+    .chunk
+        margin-bottom: $padding.default
