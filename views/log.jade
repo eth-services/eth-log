@@ -4,11 +4,11 @@ block content
     .content
         .page.log-page
             .narrow
-                h3: a(href='/') Logs from contract: 
-                    code    #{contract_address}
 
                 #insert
-                    #logs
+                    #logs.logs
+                        .log
+                            | initializing logs for contract #{contract_address}
 
                 #block_counter
 

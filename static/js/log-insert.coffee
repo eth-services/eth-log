@@ -71,6 +71,12 @@ LogInsert = React.createClass
 
     renderActivity: ->
         <div className='logs' id='logs'>
+            <div className='log'>
+                eth-log.io <a href='http://github.com/eth-services/eth-log'>v0.0.1</a>
+            </div>
+            <div className='log'>
+                furnished by <a href='http://eth-services.io'>eth-services.io</a>
+            </div>
             {@state.logs.map @renderLog}
         </div>
 
