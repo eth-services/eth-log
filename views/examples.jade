@@ -1,0 +1,29 @@
+extends base
+
+block content
+    .content
+        .page.example-page
+            .narrow.docs
+
+                .section
+                    .section-header Introduction
+                    .chunk
+                        p eth log parses <a target='_newtab' href='https://github.com/ethereum/wiki/wiki/Ethereum-Contract-ABI#events'>ethereum events</a> according to a set of standard function signatures.
+                        p Any contract calling an event with one of these signatures will be open for monitoring on eth log.
+                    .chunk
+                        p Go to <a href="/logs/#{example_contract_address}">http://eth-log.io/logs/[your_contract_address]</a> to monitor your logs.
+
+                .section
+                    .section-header Hello world example
+                    .code
+                        !=highlight('hello-logger.java')
+
+                .section
+                    .section-header Logs of different kinds
+                    .code
+                        !=highlight('kind-logger.java')
+
+                .section
+                    .section-header A rundown of events available on eth log v0.0.1
+                    .code
+                        !=highlight('event-manifest.java')

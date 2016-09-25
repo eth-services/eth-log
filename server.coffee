@@ -1,5 +1,7 @@
 somata = require 'somata'
 polar = require 'somata-socketio'
+h = require 'highlight.js'
+fs = require 'fs'
 
 Redis = require 'redis'
 redis = Redis.createClient null, null
@@ -10,13 +12,26 @@ client = new somata.Client()
 ContractsService = client.bindRemote 'ethereum:contracts'
 EventsService = client.bindRemote 'eth-log:events'
 
-app = polar config.app
+localsMiddleware = (req, res, next) ->
+    Object.keys(config._locals).map (_l) ->
+        res.locals[_l] = config._locals[_l]
+    next()
 
-app.get '/', (req, res) ->
+highlightMiddleware = (req, res, next) ->
+    res.locals.highlight = (filename) ->
+        [filename, ext] = filename.split('.')
+        source = fs.readFileSync "static/code/#{filename}.#{ext}"
+        highlighted = h.highlight ext, source.toString()
+        '<pre>\n' + highlighted.value.trim() + '</pre>'
+    next()
+
+app = polar config.app, middleware: [highlightMiddleware]
+
+app.get '/', localsMiddleware, (req, res) ->
     res.render 'home'
 
-['info','recipes'].map (slug) ->
-    app.get '/:slug', (req, res) ->
+['info','recipes', 'examples'].map (slug) ->
+    app.get '/:slug', localsMiddleware, (req, res) ->
         res.render req.params.slug
 
 app.get '/logs/:contract_address.json', (req, res) ->
@@ -27,9 +42,9 @@ app.get '/logs/:contract_address.json', (req, res) ->
 
         res.json events
 
-app.get '/logs/:contract_address', (req, res) ->
+app.get '/logs/:contract_address', localsMiddleware, (req, res) ->
     {contract_address} = req.params
-    # EventsService 'subscribeContract', address: contract_address, (err, resp) -> #....
+    EventsService 'subscribeContract', address: contract_address, (err, resp) -> console.log err, resp
     subscribeContract contract_address
     res.render 'log', {contract_address}
 

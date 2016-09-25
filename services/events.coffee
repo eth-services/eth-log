@@ -54,6 +54,7 @@ processEvent = (e) ->
 
     else return null
 
+Subscriptions = []
 
 attachBlock = (i, cb) ->
     web3.eth.getBlock i.blockHash, (err, block) ->
@@ -61,6 +62,11 @@ attachBlock = (i, cb) ->
         cb null, i
 
 subscribeContract = (c) ->
+    console.log 'Ill subscribe this thing', c.address
+    if c.address in Subscriptions
+        return console.log 'Contract is already subscribed'
+    else
+        Subscriptions.push c.address
     web3.eth.getBlockNumber (err, block_no) ->
         contract_filter = web3.eth.filter({fromBlock:block_no, toBlock: 'latest', address: c.address})
         contract_filter.watch (err, result) ->
@@ -91,10 +97,10 @@ findAllEvents = (address, cb) ->
 
             data = _.compact data
 
-            console.log 'THE DATA', data.length
             cb null, data
 
 checkContractEvents = (address, cb) ->
+    return cb null, true
     filter = web3.eth.filter({fromBlock:0, toBlock: 'latest', address})
     filter.get (err, result) ->
         console.log err, result
@@ -104,12 +110,15 @@ checkContractEvents = (address, cb) ->
             data = result.map (r) ->
                 processEvent r
             data = _.compact data
-            console.log 'THE DATA', data.length
             console.log data.map (d) -> d.event.blockNumber + '-' + d.event.logIndex
 
-            service.publish "contracts:#{address}:all_events", data
+            # service.publish "contracts:#{address}:all_events", data
 
+setInterval ->
+    console.log 'subscriptions are', Subscriptions
+, 2000
 service = new somata.Service 'eth-log:events', {
     findAllEvents
     checkContractEvents
+    subscribeContract
 }

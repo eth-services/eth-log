@@ -29,7 +29,12 @@ $colors
     padding: 0
     box-sizing: border-box
 
+html, body
+    height: 100%
+
 body
+    display:block
+    position: relative
     font: 14px/16px Roboto
     color: white
     font-family: monospace
@@ -37,6 +42,7 @@ body
     background: #333
 a
     color: $colors.log_green
+    cursor: pointer
 
 .content
     padding: $padding.default
@@ -71,9 +77,14 @@ h3
     h1
         color: $colors.log_green
         margin-bottom: $padding.small
+        a
+            text-decoration: none
+
     a
         padding-right: $padding.default
 
+    .links
+        text-decoration: underline
 .logs
     height: 500px
     overflow-y: scroll
@@ -111,7 +122,6 @@ h3
                 text-decoration: none
 
 #footer
-    position: fixed
     bottom: 0px
     left: 0px
     right: 0px
@@ -134,3 +144,5 @@ h3
 
     .chunk
         margin-bottom: $padding.default
+
+@import 'docs.sass'

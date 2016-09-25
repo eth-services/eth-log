@@ -91,29 +91,23 @@ module.exports = LogInsert
 
 somata.subscribe('ethereum:contracts', "contracts:#{window.contract_address}:pending_tx").onValue (data) ->
     if data?
-        Dispatcher.pending_transactions$.createItem data
+        Dispatcher.pending_transactions$.updateItem data.hash, data
         window.block = data.blockNumber
 
 somata.subscribe('eth-log:events', "contracts:#{window.contract_address}:events").onValue (data) ->
-    data.id_hash = data.event.blockNumber + '-' + (d.event.logIndex + 1)
-    console.log data
-    console.log 'lkjsdlfkjsldkfjsldkfjlsdkjflsdkfj'
+    data.id_hash = data.event.blockNumber + '-' + (data.event.logIndex + 1)
     if !data.event.logIndex?
-        console.log 'BROKENENNENENENE', data.event.blockNumber + '-' + (data.event.logIndex + 1)
+        console.log 'Its broken:', data.event.blockNumber + '-' + (data.event.logIndex + 1)
     Dispatcher.contract_logs$.updateItem data.id_hash, data
 
 somata.subscribe('eth-log:events', "contracts:#{window.contract_address}:all_events").onValue (data) ->
     data = data.map (d) ->
-        if !d.event.logIndex?
-            console.log 'its here'
-            console.log 'BROKENENNENENENE', d.event.blockNumber + '-' + (d.event.logIndex + 1)
         d.id_hash = d.event.blockNumber + '-' + (d.event.logIndex + 1)
         return d
     Dispatcher.contract_logs$.setItems data
 
 somata.subscribe('ethereum:contracts', "all_blocks").onValue (data) ->
-    console.log 'new block', data
-    text = document.createTextNode("New block, ##{data.number}")
+    text = document.createTextNode("Block##{data.number}... ")
     document.getElementById("block_counter").appendChild(text)
 
 ReactDOM.render(<LogInsert />, document.getElementById('insert'))
