@@ -16,6 +16,7 @@
         "dapp"
     ],
     "dependencies": {
+        "highlight.js": "9.7.x",
         "kefir-collection": "0.1.x",
         "kefir-fetch": "0.1.x",
 		"qs": "*",
