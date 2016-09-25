@@ -53,13 +53,7 @@ LogInsert = React.createClass
         console.log @state
         <div className='log-insert'>
             <div>
-                {if @state.loading
-                    <div className='loading'>loading...</div>
-                else
-                    <div>
-                        {@renderActivity()}
-                    </div>
-                }
+                {@renderActivity()}
             </div>
             <div className='col half'>
                 <h3>Pending Transactions</h3>
@@ -71,12 +65,18 @@ LogInsert = React.createClass
 
     renderActivity: ->
         <div className='logs' id='logs'>
-            <div className='log'>
-                eth-log.io <a href='http://github.com/eth-services/eth-log'>v0.0.1</a>
-            </div>
-            <div className='log'>
-                furnished by <a href='http://eth-services.io'>eth-services.io</a>
-            </div>
+            {if @state.loading
+                <div className='loading'>loading...</div>
+            else
+                <div>
+                    <div className='log'>
+                        eth-log.io <a href='http://github.com/eth-services/eth-log'>v0.0.1</a>
+                    </div>
+                    <div className='log'>
+                        furnished by <a href='http://eth-services.io'>eth-services.io</a>
+                    </div>
+                </div>
+            }
             {@state.logs.map @renderLog}
         </div>
 
