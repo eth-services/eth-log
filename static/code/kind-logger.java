@@ -1,7 +1,8 @@
+// A contract that logs messages with a filterable "kind"
 contract KindLogger {
 
     // A log with the source, a type, and a message
-    // This will give you filterable logs on the contract's log page
+    // This will yield filterable logs at http://eth-io/logs/[this.address]
     event LogKindMessage(address from, string kind, string m);
 
     // (useful helper function that will give you flexibility down the road)

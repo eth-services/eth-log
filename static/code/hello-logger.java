@@ -1,3 +1,4 @@
+// A contract that creates a log from its constructor
 contract HelloLogger {
 
     // An event w/ function signature that is parsable by eth log

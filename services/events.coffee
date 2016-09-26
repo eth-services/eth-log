@@ -14,7 +14,6 @@ web3.setProvider(new web3.providers.HttpProvider("http://#{config.eth_ip}:8545")
 
 processEvent = (e) ->
     console.log "i will process", e
-    attachBlock e, (err, e) ->
 
     # logMessage
     if e.topics[0] == '0xdf2f43000ad262ff927c671ed83129f9054af075e5d3add03a2ba7116e719a51'
