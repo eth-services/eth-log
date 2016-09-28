@@ -9,6 +9,8 @@ block content
                     #logs.logs
                         .log
                             | initializing logs for contract #{contract_address}
+                            if _filter
+                                |   with #{JSON.stringify(_filter)}
 
                 #block_counter
 

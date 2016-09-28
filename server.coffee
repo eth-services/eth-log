@@ -36,7 +36,7 @@ app.get '/', localsMiddleware, (req, res) ->
 
 app.get '/logs/:contract_address.json', (req, res) ->
     {contract_address} = req.params
-    EventsService 'findAllEvents', contract_address, (err, events) ->
+    EventsService 'findAllEvents', contract_address, req.query, (err, events) ->
         events.map (d) ->
             d.id_hash = d.event.blockNumber + '-' + d.event.logIndex
 
@@ -46,7 +46,12 @@ app.get '/logs/:contract_address', localsMiddleware, (req, res) ->
     {contract_address} = req.params
     EventsService 'subscribeContract', address: contract_address, (err, resp) -> console.log err, resp
     subscribeContract contract_address
-    res.render 'log', {contract_address}
+
+    context = {contract_address}
+    if Object.keys(req.query).length
+        context['_filter'] = req.query
+
+    res.render 'log', context
 
 session_key = (address) ->
     "eth-log:active:contracts:#{address}"

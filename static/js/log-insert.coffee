@@ -10,7 +10,7 @@ somata = require './somata-stream'
 
 Dispatcher =
     getContractLogs: (address) ->
-        fetch$ 'get', "/logs/#{address}.json"
+        fetch$ 'get', "/logs/#{address}.json" + window.location.search
     pending_transactions$: KefirCollection([], id_key: 'hash')
     contract_logs$: KefirCollection([], id_key: 'id_hash')
 

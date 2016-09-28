@@ -8,6 +8,8 @@ config = require '../config'
 
 client = new somata.Client()
 
+LoginService = client.bindRemote 'eth-login:events'
+
 # Start web3
 web3 = new Web3()
 web3.setProvider(new web3.providers.HttpProvider("http://#{config.eth_ip}:8545"))
@@ -82,7 +84,7 @@ subscribeContract = (c) ->
                             service.publish "events:#{c.address}", _data
                             service.publish "contracts:#{c.address}:events", _data
 
-findAllEvents = (address, cb) ->
+findAllEvents = (address, query, cb) ->
     filter = web3.eth.filter({fromBlock:0, toBlock: 'latest', address})
     console.log address
     # Fetches and decodes stream of events
@@ -93,7 +95,15 @@ findAllEvents = (address, cb) ->
         async.map result, attachBlock, (err, result) ->
             data = result.map (r) ->
                 processEvent r
+            data = data.filter (d) ->
+                result = true
+                Object.keys(query).map (q_k) ->
+                    if d[q_k] != query[q_k]
+                        result = false
 
+                return result
+
+            console.log query
             data = _.compact data
 
             cb null, data
@@ -116,6 +126,7 @@ checkContractEvents = (address, cb) ->
 setInterval ->
     console.log 'subscriptions are', Subscriptions
 , 2000
+
 service = new somata.Service 'eth-log:events', {
     findAllEvents
     checkContractEvents
