@@ -80,9 +80,8 @@ subscribeContract = (c) ->
                         console.log result, _data
                         console.log "New event", result
                         console.log "Decoded to", _data
-                        web3.eth.getBlock result.blockHash, (err, block) ->
-                            service.publish "events:#{c.address}", _data
-                            service.publish "contracts:#{c.address}:events", _data
+                        service.publish "events:#{c.address}", _data
+                        service.publish "contracts:#{c.address}:events", _data
 
 findAllEvents = (address, query, cb) ->
     filter = web3.eth.filter({fromBlock:0, toBlock: 'latest', address})
